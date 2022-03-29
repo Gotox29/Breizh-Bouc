@@ -7,6 +7,9 @@
     justify-content: space-between;
     background-color: #445963;
 }
+#search{
+    width: 50%;
+}
 /* --------------------------------------- ACTUALITE ------------------------------------------------- */
 #block-fil{
     display:flex;

@@ -24,62 +24,41 @@ function pseudoIsNotInDatabase($mail)
 </header>
 <body>
     <?php
-
-$result = false;
-if (isset($_POST['mail'])) {
-    $mail = $_POST['mail'];
-    $pseudo = $_POST['username'];
-    $pass = $_POST['password'];
-    $confirmPass = $_POST['confirm-password'];
-    if ($pass == $confirmPass) {
-        $result = true;
-    }
-    if ($result && mailIsNotInDatabase($mail)) {
-
-    } else {
-        $result = false;
-    }
-}
-if ($result) {
-    echo "connecté";
-    $_SESSION['username'] = $pseudo;
-    header("location: index.php");
-    die;
-} else {
-
-    var_dump($_POST);
+    if $_POST['mail']{
+        header();
+    }else{
     ?>
     <div id="connexion-creation">
-        <div id="container">
+        <div id="container">       
             <form id="form-test" action="connexion.php" method="POST">
                 <h1>Création de compte</h1>
 
                 <label><b>Email</b></label>
-                <input type="mail" placeholder="Entrer votre adresse email" name="mail" required>
-
+                <input type="password" placeholder="Adresse email" name="mail" required>
+                
                 <label><b>Pseudo</b></label>
-                <input type="text" placeholder="Entrer le nom d'utilisateur" name="username" required>
+                <input type="text" placeholder="Nom d'utilisateur" name="username" required>
 
                 <label><b>Mot de passe</b></label>
-                <input type="password" placeholder="Entrer le mot de passe" name="password" required>
+                <input type="password" placeholder="Mot de passe" name="password" required>
 
                 <label><b>Confirmer votre mot de passe</b></label>
-                <input type="password" placeholder="Entrer le mot de passe" name="confirm-password" required>
+                <input type="password" placeholder="Mot de passe" name="password" required>
 
                 <input type="submit" id='submit' value='Créer' >
 
                 <a href="connexion.html" id="lien-creation-compte">Déjà un compte ? connectez vous ici</a>
             </form>
         </div>
-        <div id="container">
+        <div id="container">        
             <form id="form-test" action="connexion.php" method="POST">
                 <h1>Connexion</h1>
 
                 <label><b>Nom d'utilisateur</b></label>
-                <input type="text" placeholder="Entrer le nom d'utilisateur" name="username" required>
+                <input type="text" placeholder="Nom d'utilisateur" name="username" required>
 
                 <label><b>Mot de passe</b></label>
-                <input type="password" placeholder="Entrer le mot de passe" name="password" required>
+                <input type="password" placeholder="Mot de passe" name="password" required>
 
                 <input type="submit" id='submit' value='Connexion' >
 
