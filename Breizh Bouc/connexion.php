@@ -1,3 +1,13 @@
+<?php
+function mailIsNotInDatabase($mail)
+{
+    return true;
+}
+function pseudoIsNotInDatabase($mail)
+{
+    return true;
+}
+?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +20,7 @@
 </head>
 
 <header>
-    <?php include("header.php"); ?>
+    <?php include "header.php";?>
 </header>
 <body>
     <?php
@@ -19,7 +29,7 @@
     }else{
     ?>
     <div id="connexion-creation">
-        <div id="container">        
+        <div id="container">       
             <form id="form-test" action="connexion.php" method="POST">
                 <h1>Création de compte</h1>
 
@@ -43,7 +53,7 @@
         <div id="container">        
             <form id="form-test" action="connexion.php" method="POST">
                 <h1>Connexion</h1>
-                
+
                 <label><b>Nom d'utilisateur</b></label>
                 <input type="text" placeholder="Nom d'utilisateur" name="username" required>
 
