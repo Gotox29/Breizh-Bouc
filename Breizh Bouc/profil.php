@@ -12,3 +12,26 @@
 <header>
     <?php include("header.php"); ?>
 </header>
+
+<div>
+    <img id="banniere" src="https://i.pinimg.com/originals/26/ae/12/26ae1241ca65ba8e8ff4a4d442c92566.png">
+</div>
+
+<div id="info">
+    <div id="photo">
+    <img src="https://cdn.icon-icons.com/icons2/1769/PNG/512/4092564-about-mobile-ui-profile-ui-user-website_114033.png">
+    </div>
+
+    <div id="nom_prenom">
+
+    </div>
+
+    <div id="amis">
+
+    </div>
+
+    <div id="modification">
+    
+    </div>
+
+<div>
