@@ -9,7 +9,7 @@
                 <button class="style-button" type="submit">Q</button>
             </form>
         </div>
-        <a href="connexion.html" class="onglet">
+        <a href="connexion.php" class="onglet">
             <div id="grid_connexion">
                 <img src="images/profile.png" width="60px" height="60px" alt="image profile">
             </div>
