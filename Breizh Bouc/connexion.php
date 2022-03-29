@@ -1,72 +1,119 @@
-<?php
-function mailIsNotInDatabase($mail)
-{
-    return true;
-}
-function pseudoIsNotInDatabase($mail)
-{
-    return true;
-}
+<?php include __DIR__ . "/components/header.php";
 ?>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    <title>Breizh Bouc</title>
-</head>
-
-<header>
-    <?php include "header.php";?>
-</header>
-
-<body>
+<div class="row">
+    <div class="offset-2 col-8">
 
 <?php
-function mailIsNotInDatabase($mail)
+function mailIsNotInDatabase($email)
 {
- return true;
+    $query = "SELECT count(1) as count FROM users WHERE email = ?";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+    if ($count > 0) {
+        alert("Erreur : L'email existe déjà.");
+        return false;
+    }
+    return true;
 }
-function pseudoIsNotInDatabase($pseudo)
+function register($email,$username,$pass)
 {
- return true;
+    $pass = md5($pass);
+    $time = time();
+    $query = "INSERT INTO `users` (`id`, `username`, `email`, `password`, `register`, `last_connection`) VALUES (NULL, ?, ?, ?, ?, ?);";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('sssii', $email,$username,$pass,$time,$time);
+    $stmt->execute();
+    $count = $stmt->affected_rows;
+    $stmt->close();
+    if ($count < 1) {
+        alert("Erreur : Impossible lors de l'enregistrement.");
+        return false;
+    }
+    return true;
 }
-
-?>
-
-    <?php 
-    $result = false;
-if (isset($_POST)&& isset($_POST['mail']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm-password'])) {
- $mail = $_POST['mail'];
- $pseudo = $_POST['username'];
- $pass = $_POST['password'];
- $confirmPass = $_POST['confirm-password'];
- if ($pass == $confirmPass) {
- $result = true;
- }
- if ($result && mailIsNotInDatabase($mail)) {
- }
-
+function login($email,$pass)
+{
+    $pass = md5($pass);
+    $username = false;
+    $id = false;
+    $query = "SELECT username, id FROM users WHERE email = ? AND `password` = ?";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('ss', $email, $pass);
+    $stmt->execute();
+    $stmt->bind_result($username, $id);
+    $stmt->fetch();
+    $stmt->close();
+    if (!$username && !$id) {
+        alert("Erreur : email ou mot de passe invalide.");
+        return false;
+    }
+    return array($username, $id);
 }
-if ($result){
- $_SESSION['username'] = $pseudo;
- header("location: index.php");
- die;
+function updateLastLogin($id) {
+    
+    $time = time();
+    $query = "UPDATE `users` SET `last_connection` = ? WHERE id = ?;";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('ii', $time,$id);
+    $stmt->execute();
+    $count = $stmt->affected_rows;
+    $stmt->close();
+    if ($count < 1) {
+        alert("Erreur.");
+        return false;
+    }
+    return true;
+}
+function alert($message)
+{
+    echo "
+    <div class='alert alert-danger' role='alert'>
+      $message
+    </div>";
+}
+$result = false;
+// création de compte
+if (isset($_POST) && isset($_POST['mail']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm-password'])) {
+    $mail = $_POST['mail'];
+    $username = $_POST['username'];
+    $pass = $_POST['password'];
+    $confirmPass = $_POST['confirm-password'];
+    if (($pass == $confirmPass) && mailIsNotInDatabase($mail)) {
+        if (register($mail,$username,$pass)){
+            $result = true;
+        } else {
+            $result = false;
+        }
+    }
+    // identification
+} else if (isset($_POST) && isset($_POST['mail']) && isset($_POST['password'])) {
+    $mail = $_POST['mail'];
+    $pass = $_POST['password'];
+    if (list($username, $id) = login($mail, $pass)) {
+        updateLastLogin($id);
+        $result = true;
+    }
+}
+if ($result) {
+    $_SESSION['username'] = $username;
+    header("location: index.php");
+    die;
 } else {
 
-}?>
+}?></div></div>
 
 <div id="connexion-creation">
    <?php
-    include("cree_compte.php");
-    ?> 
-    
-    <?php 
-    include("connexion_compte.php");
-    ?>
+include "cree_compte.php";
+?>
+
+    <?php
+include "connexion_compte.php";
+?>
 </div>
 </body>
-
+</html>
