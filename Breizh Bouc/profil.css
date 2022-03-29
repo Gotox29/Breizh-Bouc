@@ -1,0 +1,58 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    background-color: red;
+}
+
+#banniere{
+    padding-top: 20px;
+    background-size: cover;
+    height: 200px;
+}
+
+#nom_prenom{
+    background-color: red;
+    margin: 0 20px 0 10%;
+    display: flex;
+    height: 100px;
+}
+
+#nom_prenom img{
+    width: 150px;
+    height: 150px;
+    transform: translateY(-50px);
+}
+
+#nom_prenom_nav{
+    display: flex;
+    width: max-content;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+    background-color: blue;
+}
+
+#nom_prenom_content{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+}
+
+#nom_prenom_nav a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #53af57;
+    border-radius: 20px;
+    padding: 0 20px;
+    margin: 10px 0;
+}
+
+

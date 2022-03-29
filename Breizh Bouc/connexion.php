@@ -1,3 +1,13 @@
+<?php
+function mailIsNotInDatabase($mail)
+{
+    return true;
+}
+function pseudoIsNotInDatabase($mail)
+{
+    return true;
+}
+?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +20,7 @@
 </head>
 
 <header>
-    <?php include("header.php"); ?>
+    <?php include "header.php";?>
 </header>
 
 <body>
@@ -59,3 +69,4 @@ if ($result){
     ?>
 </div>
 </body>
+
