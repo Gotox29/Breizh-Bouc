@@ -12,19 +12,20 @@ function alert($message)
 function userInfo($id)
 {
     $username = false;
-    $email = false;
-    $query = "SELECT username, email FROM users WHERE id = ?";
+    $picture = false;
+    $banner = false;
+    $query = "SELECT `username`, `profil_picture`, `profil_banner` FROM uprofils WHERE `uid` = ?";
     $stmt = MysqlConnect::getInstance()->link->prepare($query);
     $stmt->bind_param('s', $id);
     $stmt->execute();
-    $stmt->bind_result($username, $email);
+    $stmt->bind_result($username,$picture,$banner);
     $stmt->fetch();
     $stmt->close();
-    if (!$username && !$email) {
+    if (!$username && !$picture && !$banner) {
         alert("Erreur : Utilisateur introuvable.");
         return false;
     }
-    return array($username, $email);
+    return array($username,$picture,$banner);
 }
 ?>
 <!DOCTYPE html>

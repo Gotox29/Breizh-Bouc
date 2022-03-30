@@ -19,18 +19,33 @@ function mailIsNotInDatabase($email)
     }
     return true;
 }
+function initProfile($uid,$username) {
+    $picture = "";
+    $banner = "";
+    $query = "INSERT INTO `uprofiles` (`uid`, `username`, `profil_picture`, `profil_banner`) VALUES (?, ?, ?, ?);";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('isss', $uid,$username,$picture,$banner);
+    $stmt->execute();
+    $count = $stmt->affected_rows;
+    $stmt->close();
+    if ($count < 1) {
+        return false;
+    }
+    return true;
+}
 function register($email,$username,$pass)
 {
     $pass = md5($pass);
     $time = time();
     $query = "INSERT INTO `users` (`id`, `username`, `email`, `password`, `register`, `last_connection`) VALUES (NULL, ?, ?, ?, ?, ?);";
     $stmt = MysqlConnect::getInstance()->link->prepare($query);
-    $stmt->bind_param('sssii', $email,$username,$pass,$time,$time);
+    $stmt->bind_param('sssii',$username,$email,$pass,$time,$time);
     $stmt->execute();
     $count = $stmt->affected_rows;
+    $uid = $stmt->insert_id;
     $stmt->close();
-    if ($count < 1) {
-        alert("Erreur : Impossible lors de l'enregistrement.");
+    if ($count < 1 && !initProfile($uid,$username)) {
+        alert("Erreur : Erreur lors de l'enregistrement.");
         return false;
     }
     return true;
@@ -48,7 +63,7 @@ function login($email,$pass)
     $stmt->fetch();
     $stmt->close();
     if (!$username && !$id && !updateLastLogin($id)) {
-        alert("Erreur : email ou mot de passe invalide.");
+        alert("Erreur : Email ou mot de passe invalide.");
         return false;
     }
     return array($username, $id);
