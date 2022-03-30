@@ -6,7 +6,7 @@
 
 <form class="border bg-blue shadow rounded mt-4 pb-2" method="POST">
     <div class="row">
-        <h2 class="font-color">Creer une publication</h2>
+        <h2 class="font-color">Ecrire une publication</h2>
     </div>
     <div class="row p-2">
         <div class="col form-floating">

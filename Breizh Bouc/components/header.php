@@ -85,8 +85,8 @@ if (isset($_SESSION['username'])) {
                 <img class="profil"src="images/profile.png" width="60px" height="60px">
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="profil.php">Mon profile</a></li>
-            <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
+            <li><a class="dropdown-item" href="profil.php">Mon profil</a></li>
+            <li><a class="dropdown-item" href="deconnexion.php">Se déconnecter</a></li>
         </ul>
         </div>
     <!-- <a href="profil.php" class="onglet" title="voir mon profil">
