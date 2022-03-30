@@ -4,10 +4,4 @@ if (!isset($_SESSION['username'])) {
     die;
 }
 ?>
-    <main>
         <?php include "actualite.php";?>
-    </main >
-
-    <?php include_once __DIR__ . "/components/footer.php"; ?>
-</body>
-</html>

@@ -60,6 +60,9 @@ if (isset($pageTitle)) {
 </head>
 <body class="mt-5 pt-4">
 <header class="fixed-top bg-dark text-light shadow">
+    <div class="line">
+
+    </div>
     <div class="row align-items-center">
         <div class="col-3">
             <a href="index.php">
@@ -79,7 +82,7 @@ if (isset($_SESSION['username'])) {
     <div class="dropdown">
         <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <?=$username?>
-                <img src="images/profile.png" width="60px" height="60px">
+                <img class="profil"src="images/profile.png" width="60px" height="60px">
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" href="profil.php">Mon profile</a></li>
@@ -96,7 +99,7 @@ if (isset($_SESSION['username'])) {
     ?>
 <a href="connexion.php" class="onglet">
     <div id="grid_connexion">
-        <img src="images/profile.png" width="60px" height="60px" alt="image profile">
+        <img class="profil" src="images/profile.png" width="60px" height="60px" alt="image profile">
     </div>
 </a>
 <?php

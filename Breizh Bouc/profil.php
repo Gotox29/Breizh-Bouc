@@ -23,8 +23,8 @@ if (isset($_GET['uid'])) {
 ?>
 
 <main>
-    <img id="banniere" src="<?=$banner?>">
-    <!-- <img id="banniere" src="https://i.pinimg.com/originals/26/ae/12/26ae1241ca65ba8e8ff4a4d442c92566.png"> -->
+    <!-- <img id="banniere" src="<?=$banner?>" -->
+    <img id="banniere" src="https://i.pinimg.com/originals/26/ae/12/26ae1241ca65ba8e8ff4a4d442c92566.png">
 
     <div id="nom_prenom">
         <img src="<?=$picture?>" id="photoProfil"alt="Photo de profil">
