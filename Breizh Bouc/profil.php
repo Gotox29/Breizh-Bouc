@@ -23,9 +23,11 @@ if (isset($_GET['uid'])) {
 ?>
 
 <main>
-    <!-- <img id="banniere" src="<?=$banner?>" -->
-    <img id="banniere" src="https://i.pinimg.com/originals/26/ae/12/26ae1241ca65ba8e8ff4a4d442c92566.png">
-
+    <div style="
+                    background-image: url(<?=$banner?>);
+                    height: 200px;
+                    background-position: center;
+                " class="rcol-12 rounded mt-1"></div>
     <div id="nom_prenom">
         <img src="<?=$picture?>" id="photoProfil" alt="Photo de profil">
         <div id="nom_prenom_nav">
@@ -62,18 +64,15 @@ if (isset($_GET['uid'])) {
 <?php
 
 
-if (isset($_GET['uid'])) {
-    $id = $_GET['uid'];
-    }
 
-	   $query= "SELECT texte,users.username FROM `publication` INNER JOIN users ON publication.user_id = users.id where user_id = '$id' order by uid desc";
+	   $query= "SELECT uid, texte,users.username,aime,unlike,non FROM `publication` INNER JOIN users ON publication.user_id = users.id where user_id = '$id' order by uid desc";
 	   $stmt = MysqlConnect::getInstance()->link->prepare($query);
 	   $stmt->execute();
-	   $stmt->bind_result($texte, $username);
+	   $stmt->bind_result( $uid,$texte, $username,$aime,$unlike,$non);
 
-           while ($stmt->fetch()) {
+while ($stmt->fetch()) {
 
-           include __DIR__ . "/components/publication.php";
+    include __DIR__ . "/components/publication.php";
 
 }
 ?>
