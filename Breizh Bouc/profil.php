@@ -38,6 +38,7 @@ if (isset($_GET['uid'])) {
             </div>
             <?php if ($isMe) { ?>
                 <a href="modify.php">
+                    <img src="images/parametreProfil.png" alt="Image de parametre" id="photoParametre">
                     <p>Modifier le profil</p>
                 </a>
             <?php } ?>
