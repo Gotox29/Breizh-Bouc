@@ -1,60 +1,111 @@
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-    <title>Breizh Bouc</title>
-</head>
+<?php include __DIR__ . "/components/header.php";
+?>
+<div class="row">
+    <div class="offset-2 col-8">
 
-<header>
-    <?php include("header.php"); ?>
-</header>
-<body>
+<?php
+function mailIsNotInDatabase($email)
+{
+    $query = "SELECT count(1) as count FROM users WHERE email = ?";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $stmt->bind_result($count);
+    $stmt->fetch();
+    $stmt->close();
+    if ($count > 0) {
+        alert("Erreur : L'email existe déjà.");
+        return false;
+    }
+    return true;
+}
+function register($email,$username,$pass)
+{
+    $pass = md5($pass);
+    $time = time();
+    $query = "INSERT INTO `users` (`id`, `username`, `email`, `password`, `register`, `last_connection`) VALUES (NULL, ?, ?, ?, ?, ?);";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('sssii', $email,$username,$pass,$time,$time);
+    $stmt->execute();
+    $count = $stmt->affected_rows;
+    $stmt->close();
+    if ($count < 1) {
+        alert("Erreur : Impossible lors de l'enregistrement.");
+        return false;
+    }
+    return true;
+}
+function login($email,$pass)
+{
+    $pass = md5($pass);
+    $username = false;
+    $id = false;
+    $query = "SELECT username, id FROM users WHERE email = ? AND `password` = ?";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('ss', $email, $pass);
+    $stmt->execute();
+    $stmt->bind_result($username, $id);
+    $stmt->fetch();
+    $stmt->close();
+    if (!$username && !$id && !updateLastLogin($id)) {
+        alert("Erreur : email ou mot de passe invalide.");
+        return false;
+    }
+    return array($username, $id);
+}
+function updateLastLogin($id) {
+    
+    $time = time();
+    $query = "UPDATE `users` SET `last_connection` = ? WHERE id = ?;";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('ii', $time,$id);
+    $stmt->execute();
+    $count = $stmt->affected_rows;
+    $stmt->close();
+    if ($count < 1) {
+        alert("Erreur.");
+        return false;
+    }
+    return true;
+}
+$result = false;
+// création de compte
+if (isset($_POST) && isset($_POST['mail']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm-password'])) {
+    $id = false;
+    $mail = $_POST['mail'];
+    $username = $_POST['username'];
+    $pass = $_POST['password'];
+    $confirmPass = $_POST['confirm-password'];
+    if (($pass == $confirmPass) && mailIsNotInDatabase($mail)) {
+        if (register($mail,$username,$pass) && (list($username, $id) = login($mail, $pass))){
+            $result = true;
+        } else {
+            $result = false;
+        }
+    }
+    // identification
+} else if (isset($_POST) && isset($_POST['mail']) && isset($_POST['password'])) {
+    $mail = $_POST['mail'];
+    $pass = $_POST['password'];
+    if (list($username, $id) = login($mail, $pass)) {
+        $result = true;
+    }
+}
+if ($result && $id) {
+    $_SESSION['username'] = $username;
+    $_SESSION['id'] = $id;
+    header("location: index.php");
+    die;
+}?></div></div>
+
+<div id="connexion-creation">
+   <?php
+include "cree_compte.php";
+?>
+
     <?php
-    if $_POST['mail']{
-        header();
-    }else{
-    ?>
-    <div id="connexion-creation">
-        <div id="container">        
-            <form id="form-test" action="connexion.php" method="POST">
-                <h1>Création de compte</h1>
-
-                <label><b>Email</b></label>
-                <input type="password" placeholder="Adresse email" name="mail" required>
-                
-                <label><b>Pseudo</b></label>
-                <input type="text" placeholder="Nom d'utilisateur" name="username" required>
-
-                <label><b>Mot de passe</b></label>
-                <input type="password" placeholder="Mot de passe" name="password" required>
-
-                <label><b>Confirmer votre mot de passe</b></label>
-                <input type="password" placeholder="Mot de passe" name="password" required>
-
-                <input type="submit" id='submit' value='Créer' >
-
-                <a href="connexion.html" id="lien-creation-compte">Déjà un compte ? connectez vous ici</a>
-            </form>
-        </div>
-        <div id="container">        
-            <form id="form-test" action="connexion.php" method="POST">
-                <h1>Connexion</h1>
-                
-                <label><b>Nom d'utilisateur</b></label>
-                <input type="text" placeholder="Nom d'utilisateur" name="username" required>
-
-                <label><b>Mot de passe</b></label>
-                <input type="password" placeholder="Mot de passe" name="password" required>
-
-                <input type="submit" id='submit' value='Connexion' >
-
-                <a href="creation_compte.html" id="lien-creation-compte">Créer un compte ici</a>
-            </form>
-        </div>
-    </div>
-    <?php }?>
+include "connexion_compte.php";
+?>
+</div>
 </body>
+</html>
