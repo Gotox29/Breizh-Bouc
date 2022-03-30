@@ -8,13 +8,13 @@ $username = false;
 $email = false;
 if (isset($_GET['uid'])) {
     $id = $_GET['uid'];
-    list($username, $email) = userInfo($id);
+    list($username,$picture,$banner) = userInfo($id);
     if (!$username) {
         die;
     }
 } else if (isset($_SESSION['id'])) {
     $id = $_SESSION['id'];
-    list($username, $email) = userInfo($id);
+    list($username,$picture,$banner) = userInfo($id);
     $isMe = true;
 } else {
     header("location: connexion.php");
@@ -23,14 +23,16 @@ if (isset($_GET['uid'])) {
 ?>
 
 <main>
-    <img id="banniere" src="https://i.pinimg.com/originals/26/ae/12/26ae1241ca65ba8e8ff4a4d442c92566.png">
+    <img id="banniere" src="<?=$banner?>">
+    <!-- <img id="banniere" src="https://i.pinimg.com/originals/26/ae/12/26ae1241ca65ba8e8ff4a4d442c92566.png"> -->
 
     <div id="nom_prenom">
-        <img src="images/image profile.png" alt="Photo de profil">
+        <img src="<?=$picture?>" alt="Photo de profil">
         <div id="nom_prenom_nav">
             <div id="nom_prenom_content">
                 <div id="nom_prenom_content">
                     <p><?=$username?></p>
+                    <p><?=$email?></p>
                     <p><?=$email?></p>
                 </div>
             </div>
@@ -38,7 +40,7 @@ if (isset($_GET['uid'])) {
                 <a href="modify.php">
                     <p>Modifier le profil</p>
                 </a>
-                <?php } ?>
+            <?php } ?>
             </div>
         </div>
         
@@ -49,7 +51,7 @@ if (isset($_GET['uid'])) {
             <div id="modification">
                 
                 </div>
-                <?php if ($isMe) { ?>
+            <?php if ($isMe) { ?>
             <div class="row mx-5">
                 <div class="col">
                     <?php include __DIR__."/components/form-publication.php"; ?>
