@@ -1,8 +1,5 @@
 <main class="container">
     <div class="row">
-        <!--<div class="col-3">
-             <div class="sticky-top">test</div> 
-        </div>-->
         <div class="col">
             <div>
                 <?php
