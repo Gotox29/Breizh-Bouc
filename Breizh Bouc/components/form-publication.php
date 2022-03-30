@@ -1,5 +1,5 @@
 <?php
-    if (isset($_SESSION['id']) && $_POST['publication']) {
+    if (isset($_SESSION['id']) && isset($_POST['publication'])) {
         var_dump($_POST);
 
     }
