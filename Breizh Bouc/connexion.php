@@ -113,7 +113,7 @@ if ($result && $id) {
     die;
 }?></div></div>
 
-<div id="connexion-creation">
+<div id="connexion-creation" class="mt-5">
    <?php
 include "cree_compte.php";
 ?>
