@@ -5,11 +5,45 @@
     flex: row;
     align-items: center;
     justify-content: space-between;
-    background-color: #445963;
+    background-color: #9e9e9e;
 }
 #search{
     width: 50%;
 }
+
+.bg-dark{
+    background-color: #263238 !important;
+}
+
+.btn-dark{
+    background-color: #263238 !important;
+}
+
+.bg-blue{
+    background-color: #4f5b62 !important;
+}
+
+.bg-white{
+    background-color: #c7c7c7;
+    border-radius: .25rem;
+}
+.line{
+    height: 7px;
+    background-color: #000a12;
+}
+
+.font-color{
+    color : #f1f1f1;
+}
+
+.btn-green{
+    background-color: #53af57;
+}
+
+.profil{
+    filter: brightness(0) invert(1);
+}
+
 /* --------------------------------------- ACTUALITE ------------------------------------------------- */
 #block-fil{
     display:flex;
@@ -18,7 +52,7 @@
     text-align: center;
 }
 #block-abonnement{
-    background-color: grey;
+    background-color: #9e9e9e;
     width: 35%;
     height: 500px;
     margin-top: 20px;
@@ -32,7 +66,7 @@
     gap: 10px;
 }
 #creer-un-poste{
-    background-color: grey;
+    background-color: #9e9e9e;
     width: 90%;
     height: 50%;
     margin: auto;
@@ -41,7 +75,7 @@
     justify-content: space-around;
 }
 #fil-actualite{
-    background-color: grey;
+    background-color: #9e9e9e;
     width: 90%;
     height: 50%;
     margin: auto;
@@ -135,9 +169,9 @@ input[type=submit] {
     border: 1px solid #53af57;
 }
 input[type=submit]:hover {
-    background-color: white;
-    color: #53af57;
-    border: 1px solid #53af57;
+    background-color: #85e282;
+    color: white;
+    border: 1px solid #85e282;
 }
 #lien-creation-compte{
     color: blue;
@@ -163,7 +197,6 @@ input[type=submit]:hover {
         font-size: 25px;
     }
 }
-
 /* --------------------------------------- PROFIL ------------------------------------------------- */
 
 #banniere{

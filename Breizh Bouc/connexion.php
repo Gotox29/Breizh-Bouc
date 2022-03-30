@@ -20,9 +20,9 @@ function mailIsNotInDatabase($email)
     return true;
 }
 function initProfile($uid,$username) {
-    $picture = "";
-    $banner = "";
-    $query = "INSERT INTO `uprofiles` (`uid`, `username`, `profil_picture`, `profil_banner`) VALUES (?, ?, ?, ?);";
+    $picture = "images/icone.jpg";
+    $banner = "images/baniere.jpg";
+    $query = "INSERT INTO `uprofils` (`uid`, `username`, `profil_picture`, `profil_banner`) VALUES (?, ?, ?, ?);";
     $stmt = MysqlConnect::getInstance()->link->prepare($query);
     $stmt->bind_param('isss', $uid,$username,$picture,$banner);
     $stmt->execute();
@@ -44,7 +44,8 @@ function register($email,$username,$pass)
     $count = $stmt->affected_rows;
     $uid = $stmt->insert_id;
     $stmt->close();
-    if ($count < 1 && !initProfile($uid,$username)) {
+    $profil = initProfile($uid,$username);
+    if ($count < 1 && !$profil) {
         alert("Erreur : Erreur lors de l'enregistrement.");
         return false;
     }
@@ -113,7 +114,7 @@ if ($result && $id) {
     die;
 }?></div></div>
 
-<div id="connexion-creation">
+<div id="connexion-creation" class="mt-5">
    <?php
 include "cree_compte.php";
 ?>
