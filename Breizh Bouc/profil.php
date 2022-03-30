@@ -57,7 +57,7 @@ if (isset($_GET['uid'])) {
                     <?php include __DIR__."/components/form-publication.php"; ?>
                 </div>
             </div>
-            <?php } ?>
+            <?php }?>
     
 </main>
 </body>
