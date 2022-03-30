@@ -23,22 +23,24 @@ if (isset($_GET['rechercher'])) {
 }
 foreach($users as $user) {
     ?>
-    <div class="row ">
-        <div class="offset-1 col-10 shadow mt-1 rouded border">
-            <div style="
-                background-image: url(<?=$user['profil_banner']?>);
-                height: 200px;
-                background-position: center;
-            " class="rcol-12 ounded m-1"></div>
-            <div class="row">
-                <div class="offset-1 col-2 border">
-                    <img class="profil_picture" src="<?=$user['profil_picture']?>">
-                </div>
-                <div class="col-8 border">
-                    <p><?=$user['username']?></p>
+    <div class="row">
+        <a href="profil.php?uid=<?=$user['uid']?>">
+            <div class="offset-1 col-10 shadow mt-1 rouded border">
+                <div style="
+                    background-image: url(<?=$user['profil_banner']?>);
+                    height: 200px;
+                    background-position: center;
+                " class="rcol-12 ounded m-1"></div>
+                <div class="row">
+                    <div class="offset-1 col-2 border">
+                        <img class="profil_picture" src="<?=$user['profil_picture']?>">
+                    </div>
+                    <div class="col-8 border">
+                        <p><?=$user['username']?></p>
+                    </div>
                 </div>
             </div>
-        </div>  
+        </a>
     </div>
     <?php
 }
