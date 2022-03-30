@@ -132,10 +132,7 @@ h2{
 #logo-lien-accueil{
     width: 9%;
 }
-main{
-    background-image: url("images/wallpaper.jpg");
-    background-attachment: fixed;
-}
+
 #container{
     font-size: 0.9em;
     width: 35%;
