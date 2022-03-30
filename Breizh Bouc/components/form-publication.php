@@ -21,3 +21,35 @@
         </div>
     </div>
 </form>
+
+
+<?php
+
+
+function publication($id,$texte){
+
+$query = "INSERT INTO `publication` (`uid`, `texte`, `like`, `unlike`, `user_id`, `non`) VALUES (NULL, ?, NULL, NULL, ?, NULL)";
+$stmt = MysqlConnect::getInstance()->link->prepare($query);
+$stmt->bind_param('si', $texte, $id);
+$stmt->execute();
+
+
+
+}
+
+
+if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+
+
+
+if (isset($_POST) && isset($_POST['publication'])){
+
+$texte = $_POST['publication'];
+
+publication($id,$texte);
+
+
+}
+}
+?>
