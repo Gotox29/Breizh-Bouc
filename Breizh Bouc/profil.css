@@ -10,13 +10,13 @@
 }
 
 #nom_prenom{
-    background-color: red;
+    background-color: none;
     margin: 0 20px 0 10%;
     display: flex;
     height: 100px;
 }
 
-#nom_prenom img{
+#nom_prenom #photoProfil{
     width: 150px;
     height: 150px;
     transform: translateY(-50px);
@@ -28,7 +28,7 @@
     height: 100%;
     width: 100%;
     justify-content: space-between;
-    background-color: blue;
+    background-color: none;
 }
 
 #nom_prenom_content{
@@ -41,6 +41,19 @@
     width: 150px;
 }
 
+#nom_prenom_content{
+    font-size: 1.2em;
+}
+
+#nom_prenom_content :nth-child(1n),:nth-child(2n){
+    margin: auto 0;
+}
+
+#nom_prenom_content :nth-child(3n){
+    min-width: 50%;
+    text-align: center;
+}
+
 #nom_prenom_nav a{
     display: flex;
     justify-content: center;
@@ -49,4 +62,15 @@
     border-radius: 20px;
     padding: 0 20px;
     margin: 10px 0;
+    text-decoration: none;
+    gap: 10px;
+}
+#nom_prenom_nav a #photoParametre{
+    width: 50px;
+    height: 50px;
+}
+#nom_prenom_nav a p{
+    color: white;
+    margin: auto 0;
+    font-size: 1.5em;
 }
