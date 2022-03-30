@@ -2,6 +2,24 @@
 $css = array("profil");
 $pageTitle = "Profile";
 include __DIR__ . "/components/header.php";
+
+$isMe = false;
+$username = false;
+$email = false;
+if (isset($_GET['uid'])) {
+    $id = $_GET['uid'];
+    list($username, $email) = userInfo($id);
+    if (!$username) {
+        die;
+    }
+} else if (isset($_SESSION['id'])) {
+    $id = $_SESSION['id'];
+    list($username, $email) = userInfo($id);
+    $isMe = true;
+} else {
+    header("location: connexion.php");
+    die;
+}
 ?>
 
 <main>
@@ -12,25 +30,33 @@ include __DIR__ . "/components/header.php";
         <div id="nom_prenom_nav">
             <div id="nom_prenom_content">
                 <div id="nom_prenom_content">
-                    <p>Ewenn</p>
-                    <p>Ansquer</p>
-                    <p>666 amis</p>
+                    <p><?=$username?></p>
+                    <p><?=$email?></p>
                 </div>
             </div>
-            <a href="modify.php">
-                <p>Modifier le profil</p>
-            </a>
+            <?php if ($isMe) { ?>
+                <a href="modify.php">
+                    <p>Modifier le profil</p>
+                </a>
+                <?php } ?>
+            </div>
         </div>
-    </div>
-
-    <div id="amis">
-
-    </div>
-
-    <div id="modification">
-
-    </div>
-
+        
+        <div id="amis">
+            
+            </div>
+            
+            <div id="modification">
+                
+                </div>
+                <?php if ($isMe) { ?>
+            <div class="row mx-5">
+                <div class="col">
+                    <?php include __DIR__."/components/form-publication.php"; ?>
+                </div>
+            </div>
+            <?php } ?>
+    
 </main>
 </body>
 </html>

@@ -47,7 +47,7 @@ function login($email,$pass)
     $stmt->bind_result($username, $id);
     $stmt->fetch();
     $stmt->close();
-    if (!$username && !$id) {
+    if (!$username && !$id && !updateLastLogin($id)) {
         alert("Erreur : email ou mot de passe invalide.");
         return false;
     }
@@ -68,22 +68,16 @@ function updateLastLogin($id) {
     }
     return true;
 }
-function alert($message)
-{
-    echo "
-    <div class='alert alert-danger' role='alert'>
-      $message
-    </div>";
-}
 $result = false;
 // création de compte
 if (isset($_POST) && isset($_POST['mail']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm-password'])) {
+    $id = false;
     $mail = $_POST['mail'];
     $username = $_POST['username'];
     $pass = $_POST['password'];
     $confirmPass = $_POST['confirm-password'];
     if (($pass == $confirmPass) && mailIsNotInDatabase($mail)) {
-        if (register($mail,$username,$pass)){
+        if (register($mail,$username,$pass) && (list($username, $id) = login($mail, $pass))){
             $result = true;
         } else {
             $result = false;
@@ -94,16 +88,14 @@ if (isset($_POST) && isset($_POST['mail']) && isset($_POST['username']) && isset
     $mail = $_POST['mail'];
     $pass = $_POST['password'];
     if (list($username, $id) = login($mail, $pass)) {
-        updateLastLogin($id);
         $result = true;
     }
 }
-if ($result) {
+if ($result && $id) {
     $_SESSION['username'] = $username;
+    $_SESSION['id'] = $id;
     header("location: index.php");
     die;
-} else {
-
 }?></div></div>
 
 <div id="connexion-creation">

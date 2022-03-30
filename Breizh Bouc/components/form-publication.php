@@ -1,11 +1,17 @@
-<form class="border shadow rounded mt-4 pb-2">
+<?php
+    if (isset($_SESSION['id']) && $_POST['publication']) {
+        var_dump($_POST);
+
+    }
+?>
+<form class="border shadow rounded mt-4 pb-2" method="POST">
     <div class="row">
         <h2>Creer une publication</h2>
     </div>
     <div class="row p-2">
         <div class="col form-floating">
-            <textarea class="form-control" placeholder="Ça raconte quoi ?" id="publier" resize="true"></textarea>
-            <label class="ms-2" for="publier">Ça raconte quoi ?</label>
+            <textarea class="form-control" placeholder="Ça raconte quoi ?" name="publication" id="publication" resize="true"></textarea>
+            <label class="ms-2" for="publication">Ça raconte quoi ?</label>
         </div>
     </div>
     <div class="row">

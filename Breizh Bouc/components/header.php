@@ -2,9 +2,33 @@
 if (empty(session_id()) ) session_start(); 
 ob_start();
 include_once "MysqlConnect.php";
+function alert($message)
+{
+    echo "
+    <div class='alert alert-danger' role='alert'>
+      $message
+    </div>";
+}
+function userInfo($id)
+{
+    $username = false;
+    $email = false;
+    $query = "SELECT username, email FROM users WHERE id = ?";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('s', $id);
+    $stmt->execute();
+    $stmt->bind_result($username, $email);
+    $stmt->fetch();
+    $stmt->close();
+    if (!$username && !$email) {
+        alert("Erreur : Utilisateur introuvable.");
+        return false;
+    }
+    return array($username, $email);
+}
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,7 +57,7 @@ if (isset($pageTitle)) {
 ?>
     <title>Breizh Bouc<?=$title?></title>
 </head>
-<body class="mt-5 pt-5">
+<body class="mt-5 pt-4">
 <header class="fixed-top bg-dark text-light shadow">
     <div class="row align-items-center">
         <div class="col-3">
