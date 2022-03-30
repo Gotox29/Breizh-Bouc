@@ -16,7 +16,6 @@
             <button class="btn btn-sm fs-3" alt="Je n'aime pas" title="Je n'aime pas">👎</button>
             <button class="btn btn-sm fs-3" alt="J'emmerde" title="J'emmerde">🖕</button>
             <!-- <button class="btn btn-sm fs-6" alt="Je commente">commenter</button> -->
-
         </div>
     </div>
 </article>
