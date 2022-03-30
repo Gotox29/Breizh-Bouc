@@ -6,7 +6,7 @@ class MysqlConnect {
 
     private function __construct()
     {
-        $this->link = mysqli_connect("database", getenv("BDDUSER"), getenv("BDDMDP"), getenv("BDDNAME"));
+        $this->link = mysqli_connect(getenv("BDDADDR"), getenv("BDDUSER"), getenv("BDDMDP"), getenv("BDDNAME"));
     }
 
     public static function getInstance() {
