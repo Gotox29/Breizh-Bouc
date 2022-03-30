@@ -85,7 +85,7 @@ if (isset($_SESSION['username'])) {
                 <img class="profil"src="images/profile.png" width="60px" height="60px">
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="profil.php">Mon profile</a></li>
+            <li><a class="dropdown-item" href="profil.php">Mon profil</a></li>
             <li><a class="dropdown-item" href="deconnexion.php">Se deconnecter</a></li>
         </ul>
         </div>
@@ -104,6 +104,52 @@ if (isset($_SESSION['username'])) {
 </a>
 <?php
 }
+
+
+function like($uid){
+    $query = "UPDATE `publication` SET aime = aime +1 where uid=?";
+    // $query = "UPDATE `publication` SET like = 1 where uid=$uid";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('i',$uid);
+    $stmt->execute();
+    
+}
+function unlike($uid){
+    $query = "UPDATE `publication` SET unlike = unlike +1 where uid=?";
+    // $query = "UPDATE `publication` SET like = 1 where uid=$uid";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('i',$uid);
+    $stmt->execute();
+    
+}
+function fuck($uid){
+    $query = "UPDATE `publication` SET non= non+1 where uid= ?";
+    // $query = "UPDATE `publication` SET like = 1 where uid=$uid";
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->bind_param('i',$uid);
+    $stmt->execute();
+    
+}
+    
+    
+    if (isset($_POST) && isset($_POST['reaction']) && isset ($_POST['uid'])){
+    
+    $reaction=$_POST['reaction'];
+    $uid=$_POST['uid'];
+
+    switch($reaction) {
+            case "aime":
+            like($uid);
+            break;
+            case "unlike":
+            unlike($uid);
+            break;
+            case "fuck":
+            fuck($uid);
+            break;
+    }
+    
+    }
 ?>
         </div>
     </div>
