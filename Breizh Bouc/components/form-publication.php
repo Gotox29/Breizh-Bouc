@@ -1,7 +1,6 @@
 <?php
-    if (isset($_SESSION['id']) && $_POST['publication']) {
+    if (isset($_SESSION['id']) && isset($_POST['publication'])) {
         var_dump($_POST);
-
     }
 ?>
 <form class="border shadow rounded mt-4 pb-2" method="POST">

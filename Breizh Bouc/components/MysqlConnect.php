@@ -1,7 +1,6 @@
 <?php
 include_once __DIR__."/../.env.php";
-// var_dump(getenv("BDDUSER"));
-// die;
+
 class MysqlConnect {
     public mysqli $link;
     private static $instance;
