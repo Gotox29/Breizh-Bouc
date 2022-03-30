@@ -5,5 +5,4 @@ if (!isset($_SESSION['username'])) {
 }
 ?>
         <?php include "actualite.php";?>
-</body>
-</html>
+
