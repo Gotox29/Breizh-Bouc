@@ -101,6 +101,11 @@
     align-items: center;
     text-align: center;
 }
+#back {
+    background-image: url("images/wallpaper.jpg");
+    background-attachment: fixed;
+}
+
 /* --------------------------------------- CONNEXIONS ------------------------------------------------- */
 #connexion-creation{
     display: flex;

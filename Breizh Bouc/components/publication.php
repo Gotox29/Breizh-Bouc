@@ -4,10 +4,10 @@
             <img src="images/profile.png" class="profil" width="40px" height="40px" alt="logo insert image">
         </div>
         <div class="col text-start">
-            <h6><?=$username?></h6>
+            <h6 class="font-color"><?=$username?></h6>
         </div>
     </div>
-   <div class="row">
+   <div class="row bg-white">
         <p class="col p-3 mx-2 text-start"><?=$texte?></p>
     </div>
     <div class="row">
