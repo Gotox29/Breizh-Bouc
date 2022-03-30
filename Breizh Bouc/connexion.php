@@ -123,5 +123,6 @@ include "cree_compte.php";
 include "connexion_compte.php";
 ?>
 </div>
+<?php include __DIR__ . "/components/footer.php"; ?>
 </body>
 </html>

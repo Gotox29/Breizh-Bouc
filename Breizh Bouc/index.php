@@ -4,6 +4,4 @@ if (!isset($_SESSION['username'])) {
     die;
 }
 ?>
-        <?php include "actualite.php";?>
-</body>
-</html>
+        <?php include "actualite.php";?>    

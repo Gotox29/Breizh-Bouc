@@ -27,7 +27,7 @@ if (isset($_GET['uid'])) {
     <img id="banniere" src="https://i.pinimg.com/originals/26/ae/12/26ae1241ca65ba8e8ff4a4d442c92566.png">
 
     <div id="nom_prenom">
-        <img src="<?=$picture?>" id="photoProfil" alt="Photo de profil">
+        <img src="<?=$picture?>" id="photoProfil"alt="Photo de profil">
         <div id="nom_prenom_nav">
             <div id="nom_prenom_content">
                 <div id="nom_prenom_content">
@@ -58,27 +58,8 @@ if (isset($_GET['uid'])) {
                     <?php include __DIR__."/components/form-publication.php"; ?>
                 </div>
             </div>
-            <?php } ?>
-<?php
-
-
-if (isset($_GET['uid'])) {
-    $id = $_GET['uid'];
-    }
-
-	   $query= "SELECT texte,users.username FROM `publication` INNER JOIN users ON publication.user_id = users.id where user_id = '$id' order by uid desc";
-	   $stmt = MysqlConnect::getInstance()->link->prepare($query);
-	   $stmt->execute();
-	   $stmt->bind_result($texte, $username);
-
-           while ($stmt->fetch()) {
-
-           include __DIR__ . "/components/publication.php";
-
-}
-?>
-
-
+            <?php }?>
+    
 </main>
 </body>
 </html>
