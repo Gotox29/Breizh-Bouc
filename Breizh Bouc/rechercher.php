@@ -25,12 +25,12 @@ foreach($users as $user) {
     ?>
     <div class="row">
         <a class="link-light" href="profil.php?uid=<?=$user['uid']?>">
-            <div class="offset-1 col-10 border bg-blue shadow rounded px-3 mt-4">
+            <div class="offset-1 col-10 border bg-blue shadow rounded mt-4">
                 <div style="
                     background-image: url(<?=$user['profil_banner']?>);
                     height: 200px;
                     background-position: center;
-                " class="rcol-12 rounded m-1"></div>
+                " class="rcol-12 rounded-top"></div>
                 <div class="row">
                     <div class="offset-1 col-2">
                         <img class="profil_picture" src="<?=$user['profil_picture']?>">

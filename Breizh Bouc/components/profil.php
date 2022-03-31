@@ -68,16 +68,17 @@ $query= "SELECT id,texte,username,profil_picture,sending_date,aime,unlike,non FR
 $stmt = MysqlConnect::getInstance()->link->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();
-$stmt->bind_result($pid,$texte,$username,$profil_picture,$sending_date,$like,$unlike,$fuck);
+$stmt->bind_result($pid,$texte,$username,$profil_picture,$sending_date,$aime,$unlike,$non);
 
 
-// $query= "SELECT
-// sum(reaction_type = 1) as `like`,
-// sum(reaction_type = 2) as `unlike`,
-// sum(reaction_type = 3) as `fuck`
-// FROM `reactions` 
-// WHERE reactions.pid = ?";
-// $reactStmt = MysqlConnect::getInstance()->link->prepare($query);
+$query= "SELECT
+sum(reaction_type = 1) as `like`,
+sum(reaction_type = 2) as `unlike`,
+sum(reaction_type = 3) as `fuck`
+FROM `reactions` 
+WHERE reactions.pid = ?";
+$reactStmt = MysqlConnect::getInstance()->link->prepare($query);
+$reactStmt->bind_param('i', $pid);
 
 while ($stmt->fetch()) {
 

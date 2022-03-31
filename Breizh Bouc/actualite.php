@@ -9,11 +9,21 @@
                 ?>
                 </div>
                 <?php
-$query= "SELECT texte,users.username,uid,aime,unlike,non FROM `publication` INNER JOIN users ON publication.user_id = users.id order by uid desc";
 
+$query= "SELECT id,texte,username,profil_picture,sending_date,aime,unlike,non
+FROM `publication` 
+INNER JOIN uprofils ON publication.user_id = uprofils.uid order by sending_date desc";
 $stmt = MysqlConnect::getInstance()->link->prepare($query);
 $stmt->execute();
-$stmt->bind_result($texte, $username, $uid,$aime,$unlike,$non);
+$stmt->bind_result($pid,$texte,$username,$profil_picture,$sending_date,$like,$unlike,$fuck);
+
+// $query= "SELECT
+// sum(reaction_type = 1) as `like`,
+// sum(reaction_type = 2) as `unlike`,
+// sum(reaction_type = 3) as `fuck`
+// FROM `reactions` 
+// WHERE reactions.pid = ?";
+// $reactStmt = MysqlConnect::getInstance()->link->prepare($query);
 
 while ($stmt->fetch()) {
 

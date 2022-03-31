@@ -1,4 +1,4 @@
-<form class="border shadow rounded mt-4 pb-2" method="POST">
+<form class="border shadow bg-blue rounded mt-4 pb-2" method="POST">
     <div class="row">
         <h2 class="font-color">Ecrire une publication</h2>
     </div>
@@ -22,9 +22,10 @@
 
 function publication($id,$texte){
 
-$query = "INSERT INTO `publication` (`uid`, `texte`, `aime`, `unlike`, `user_id`, `non`) VALUES (NULL, ?, 0, 0, ?, 0)";
+$query = "INSERT INTO `publication` (`id`, `texte`, `aime`, `unlike`, `user_id`, `non`, `sending_date`, `last_update`) VALUES (NULL, ?, 0, 0, ?, 0, ?, ?)";
 $stmt = MysqlConnect::getInstance()->link->prepare($query);
-$stmt->bind_param('si', $texte, $id);
+$now = time();
+$stmt->bind_param('siii', $texte, $id, $now, $now);
 $stmt->execute();
 
 

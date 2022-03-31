@@ -2,12 +2,33 @@
 if (empty(session_id()) ) session_start(); 
 ob_start();
 include_once "MysqlConnect.php";
+date_default_timezone_set('Europe/Paris');
+function intToDateFormat($time, $format = "l j F Y") {
+    $english_days = array('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday');
+    $french_days = array('lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche');
+    $english_months = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+    $french_months = array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+    return str_replace($english_months, $french_months, str_replace($english_days, $french_days, date($format,$time) ) );
+}
 function alert($message)
 {
     echo "
     <div class='alert alert-danger' role='alert'>
       $message
     </div>";
+}
+
+function getReactionsType()
+{
+    $query = "SELECT `id`, `label`, `icon` FROM reaction_types";
+    $stmt = MysqlConnect::getInstance()->link->set_charset("utf8mb4");;
+    $stmt = MysqlConnect::getInstance()->link->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
+    $stmt->fetch();
+    $stmt->close();
+    return $rows;
 }
 function userInfo($id)
 {
@@ -106,46 +127,49 @@ if (isset($_SESSION['username'])) {
 }
 
 
-function like($uid){
-    $query = "UPDATE `publication` SET aime = aime +1 where uid=?";
+function like($pid){
+    $query = "UPDATE `publication` SET aime = aime+1, last_update=? where id=?";
     // $query = "UPDATE `publication` SET like = 1 where uid=$uid";
     $stmt = MysqlConnect::getInstance()->link->prepare($query);
-    $stmt->bind_param('i',$uid);
+    $now = time();
+    $stmt->bind_param('ii',$now, $pid);
     $stmt->execute();
     
 }
-function unlike($uid){
-    $query = "UPDATE `publication` SET unlike = unlike +1 where uid=?";
+function unlike($pid){
+    $query = "UPDATE `publication` SET unlike = unlike +1, last_update=? where id=?";
     // $query = "UPDATE `publication` SET like = 1 where uid=$uid";
     $stmt = MysqlConnect::getInstance()->link->prepare($query);
-    $stmt->bind_param('i',$uid);
+    $now = time();
+    $stmt->bind_param('ii',$now, $pid);
     $stmt->execute();
     
 }
-function fuck($uid){
-    $query = "UPDATE `publication` SET non= non+1 where uid= ?";
+function fuck($pid){
+    $query = "UPDATE `publication` SET non= non+1, last_update=? where id= ?";
     // $query = "UPDATE `publication` SET like = 1 where uid=$uid";
     $stmt = MysqlConnect::getInstance()->link->prepare($query);
-    $stmt->bind_param('i',$uid);
+    $now = time();
+    $stmt->bind_param('ii',$now, $pid);
     $stmt->execute();
     
 }
     
     
-    if (isset($_POST) && isset($_POST['reaction']) && isset ($_POST['uid'])){
+    if (isset($_POST) && isset($_POST['reaction']) && isset($_POST['pid'])){
     
     $reaction=$_POST['reaction'];
-    $uid=$_POST['uid'];
+    $pid=$_POST['pid'];
 
     switch($reaction) {
             case "aime":
-            like($uid);
+            like($pid);
             break;
             case "unlike":
-            unlike($uid);
+            unlike($pid);
             break;
             case "fuck":
-            fuck($uid);
+            fuck($pid);
             break;
     }
     
