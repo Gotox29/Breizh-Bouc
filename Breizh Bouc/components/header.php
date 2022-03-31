@@ -79,7 +79,7 @@ if (isset($pageTitle)) {
 ?>
     <title>Breizh Bouc<?=$title?></title>
 </head>
-<body class="mt-5 pt-4">
+<body id="back" class="mt-5 pt-4">
 <header class="fixed-top bg-dark text-light shadow">
     <div class="line">
 
@@ -102,7 +102,7 @@ if (isset($_SESSION['username'])) {
     ?>
     <div class="dropdown">
         <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <?=$username?>
+                <?=htmlspecialchars($username, ENT_QUOTES, 'UTF-8')?>
                 <img class="profil"src="images/profile.png" width="60px" height="60px">
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">

@@ -36,7 +36,7 @@ foreach($users as $user) {
                         <img class="profil_picture" src="<?=$user['profil_picture']?>">
                     </div>
                     <div class="col-8">
-                        <p><?=$user['username']?></p>
+                        <p><?=htmlspecialchars($user['username'], ENT_QUOTES, 'UTF-8')?></p>
                     </div>
                 </div>
             </div>

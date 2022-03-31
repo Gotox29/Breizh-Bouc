@@ -33,9 +33,9 @@ if (isset($_GET['uid'])) {
         <div id="nom_prenom_nav">
             <div id="nom_prenom_content">
                 <div id="nom_prenom_content">
-                    <p><?=$username?></p>
-                    <p><?=$email?></p>
-                    <p><?=$email?></p>
+                    <p><?=htmlspecialchars($username, ENT_QUOTES, 'UTF-8')?></p>
+                    <p></p>
+                    <p></p>
                 </div>
             </div>
             <?php if ($isMe) { ?>
@@ -60,33 +60,17 @@ if (isset($_GET['uid'])) {
                     <?php include __DIR__."/components/form-publication.php"; ?>
                 </div>
             </div>
-            <?php } ?>
-<?php
-$reactions = getReactionsType();
-
-$query= "SELECT id,texte,username,profil_picture,sending_date,aime,unlike,non FROM `publication` INNER JOIN uprofils ON publication.user_id = uprofils.uid where user_id = ? order by sending_date desc";
+            <?php }
+$query= "SELECT id,user_id,texte,username,profil_picture,sending_date,aime,unlike,non FROM `publication` INNER JOIN uprofils ON publication.user_id = uprofils.uid where user_id = ? order by sending_date desc";
 $stmt = MysqlConnect::getInstance()->link->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();
-$stmt->bind_result($pid,$texte,$username,$profil_picture,$sending_date,$like,$unlike,$fuck);
-
-
-// $query= "SELECT
-// sum(reaction_type = 1) as `like`,
-// sum(reaction_type = 2) as `unlike`,
-// sum(reaction_type = 3) as `fuck`
-// FROM `reactions` 
-// WHERE reactions.pid = ?";
-// $reactStmt = MysqlConnect::getInstance()->link->prepare($query);
+$stmt->bind_result($pid,$user_id,$texte,$username,$profil_picture,$sending_date,$like,$unlike,$fuck);
 
 while ($stmt->fetch()) {
-
     include __DIR__ . "/components/publication.php";
-
 }
 ?>
-
-
 </main>
 </body>
 </html>

@@ -6,6 +6,7 @@
 <?php
 function mailIsNotInDatabase($email)
 {
+    $count = 0;
     $query = "SELECT count(1) as count FROM users WHERE email = ?";
     $stmt = MysqlConnect::getInstance()->link->prepare($query);
     $stmt->bind_param('s', $email);
